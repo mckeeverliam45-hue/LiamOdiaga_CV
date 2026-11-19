@@ -11,7 +11,7 @@ Serve the repository root through Apache/PHP (for example, with XAMPP) and open
    creates and seeds the skills table without replacing existing records.
 2. Configure `DB_HOST`, `DB_NAME`, `DB_USER`, and `DB_PASS` for PHP. The defaults in
    `db.php` are `localhost`, `digital_cv`, `root`, and an empty password.
-3. Create the `MCKEEVER` admin account from PowerShell in the project directory.
+3. Create the `Mckeever` admin account from PowerShell in the project directory.
    The command securely prompts for a password of at least 12 characters:
 
    ```powershell
@@ -26,7 +26,7 @@ Serve the repository root through Apache/PHP (for example, with XAMPP) and open
    }
    ```
 
-   Running the script again resets the `MCKEEVER` account's password. To use a
+   Running the script again resets the `Mckeever` account's password. To use a
    different username, set `ADMIN_USERNAME` before running the script.
 4. Visit `/admin.html` and sign in. The dashboard can review/delete contact
    messages and create, edit, or delete projects, education records, and skills.

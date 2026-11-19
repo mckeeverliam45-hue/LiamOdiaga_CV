@@ -9,7 +9,7 @@ if (PHP_SAPI !== 'cli') {
 
 require_once __DIR__ . '/db.php';
 
-$username = getenv('ADMIN_USERNAME') ?: 'MCKEEVER';
+$username = getenv('ADMIN_USERNAME') ?: 'Mckeever';
 $password = getenv('ADMIN_PASSWORD') ?: '';
 
 if ($username === '' || strlen($username) > 50 || $password === '' || strlen($password) < 12) {
