@@ -6,6 +6,8 @@ WORKDIR /var/www/html
 
 COPY liamPortfoloo/index/index.html /var/www/html/index.html
 COPY liamPortfoloo/index/admin.html /var/www/html/admin.html
+COPY liamPortfoloo/index/robots.txt /var/www/html/robots.txt
+COPY liamPortfoloo/index/sitemap.xml /var/www/html/sitemap.xml
 COPY liamPortfoloo/index/styles.css /var/www/html/styles.css
 COPY liamPortfoloo/index/admin.css /var/www/html/admin.css
 COPY liamPortfoloo/assets/liam-mark.svg /var/www/html/assets/liam-mark.svg
