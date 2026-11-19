@@ -40,15 +40,6 @@
             <p class="auth-card-desc">Sign in to manage your portfolio content and messages.</p>
           </header>
 
-          <!-- Demo credentials hint -->
-          <div class="demo-credentials">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-            <div>
-              <strong>Demo credentials</strong>
-              <span>Username: <code>admin</code> &nbsp;·&nbsp; Password: <code>admin123</code></span>
-            </div>
-          </div>
-
           <form id="loginForm" class="auth-form" novalidate>
             <div class="field-group">
               <label class="field-label" for="username">Username</label>
@@ -569,39 +560,15 @@
               </div>
             </div>
 
-            <!-- Change password -->
             <div class="settings-card">
               <h3 class="settings-card-title">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                Change Password
+                Password management
               </h3>
-              <form class="record-form" id="passwordForm" style="margin-bottom:0">
-                <div class="form-row">
-                  <label class="field-label">Current password
-                    <input class="field-input" id="currentPw" type="password" placeholder="Enter current password" required />
-                  </label>
-                </div>
-                <div class="form-row">
-                  <label class="field-label">New password
-                    <input class="field-input" id="newPw" type="password" placeholder="Min. 8 characters" required minlength="8" />
-                  </label>
-                </div>
-                <div class="form-row">
-                  <label class="field-label">Confirm new password
-                    <input class="field-input" id="confirmPw" type="password" placeholder="Repeat new password" required />
-                  </label>
-                </div>
-                <div class="pw-strength" id="pwStrength" hidden>
-                  <div class="pw-strength-bar">
-                    <span id="pwStrengthFill"></span>
-                  </div>
-                  <span id="pwStrengthLabel">—</span>
-                </div>
-                <div class="form-actions">
-                  <button class="btn-primary btn-sm" type="submit">Update password</button>
-                </div>
-                <p class="admin-notice" id="pwStatus" role="status" aria-live="polite"></p>
-              </form>
+              <p class="auth-card-desc">
+                Reset the admin password using the
+                <a href="../backend/README.md" target="_blank" rel="noopener noreferrer">admin setup instructions</a>.
+              </p>
             </div>
 
             <!-- Appearance -->

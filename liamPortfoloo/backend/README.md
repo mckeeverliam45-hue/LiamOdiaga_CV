@@ -1,8 +1,8 @@
 # Admin setup
 
 The admin dashboard requires PHP with PDO MySQL enabled and the `digital_cv` MySQL database.
-Serve the project through Apache/PHP (for example, with XAMPP) and open
-`/index/admin.html`; opening the HTML files with a `file://` URL will not connect to PHP.
+Serve the repository root through Apache/PHP (for example, with XAMPP) and open
+`/admin.html`; opening the HTML files with a `file://` URL will not connect to PHP.
 
 1. Import `database/digital_cv.sql` into MySQL. The script creates the required
    tables, including the editable skills catalog, and adds starter portfolio
@@ -28,7 +28,7 @@ Serve the project through Apache/PHP (for example, with XAMPP) and open
 
    Running the script again resets the `MCKEEVER` account's password. To use a
    different username, set `ADMIN_USERNAME` before running the script.
-4. Visit `/index/admin.html` and sign in. The dashboard can review/delete contact
+4. Visit `/admin.html` and sign in. The dashboard can review/delete contact
    messages and create, edit, or delete projects, education records, and skills.
    Portfolio content changes appear on the public site.
 

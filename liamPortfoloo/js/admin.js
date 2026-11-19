@@ -19,8 +19,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   /* ─── Config ──────────────────────────────────────────── */
-  const DEMO_USER     = "liam@26";
-  const DEMO_PASS     = "mckeever03";
   const API_URL       = "../backend/admin-api.php";
   const SESSION_MIN   = 30; // minutes until session warning
 
@@ -91,7 +89,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* ─── State ───────────────────────────────────────────── */
   let csrfToken    = "";
-  let isDemoMode   = false;
   let sessionStart = null;
 
   /* ═══════════════════════════════════════════════════════
@@ -247,11 +244,9 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   /* ═══════════════════════════════════════════════════════
-     HTTP REQUEST HELPER (falls back to demo store)
+     HTTP REQUEST HELPER
   ═══════════════════════════════════════════════════════ */
   async function request(resource, options = {}) {
-    if (isDemoMode) return demoRequest(resource, options);
-
     const url = new URL(API_URL, window.location.href);
     url.searchParams.set("resource", resource);
     if (options.id !== undefined) url.searchParams.set("id", String(options.id));
@@ -269,9 +264,7 @@ document.addEventListener("DOMContentLoaded", () => {
         body: options.body === undefined ? undefined : JSON.stringify(options.body),
       });
     } catch {
-      // Switch to demo mode on network failure
-      isDemoMode = true;
-      return demoRequest(resource, options);
+      throw new Error("Cannot reach the admin service. Check that PHP is enabled.");
     }
 
     let result;
@@ -284,58 +277,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     return result;
   }
-
-  /* ─── Demo request handler ────────────────────────────── */
-  function demoRequest(resource, options = {}) {
-    const method = (options.method || "GET").toUpperCase();
-    const body   = options.body || {};
-
-    if (resource === "session") {
-      if (method === "POST") {
-        const { username, password } = body;
-        if (username === DEMO_USER && password === DEMO_PASS) {
-          return Promise.resolve({ csrfToken: "demo-csrf", authenticated: true });
-        }
-        return Promise.reject(new Error("Incorrect username or password."));
-      }
-      if (method === "DELETE") return Promise.resolve({ message: "Signed out." });
-      return Promise.resolve({ authenticated: false });
-    }
-
-    const resourceMap = {
-      messages: "messages", projects: "projects",
-      education: "education", skills: "skills",
-    };
-    const key = resourceMap[resource];
-    if (!key) return Promise.reject(new Error("Unknown resource."));
-
-    if (method === "GET")  return Promise.resolve({ records: store.get(key) });
-
-    if (method === "POST") {
-      store.add(key, body);
-      store.log(`Created ${key.slice(0, -1)}: "${body.title || body.name || body.institution || body.subject || "entry"}"`);
-      return Promise.resolve({ message: `${capitalise(key.slice(0, -1))} added.` });
-    }
-
-    if (method === "PUT") {
-      const id = Number(body.id || options.id);
-      const { id: _id, ...rest } = body;
-      store.update(key, id, rest);
-      store.log(`Updated ${key.slice(0, -1)} #${id}`);
-      return Promise.resolve({ message: `${capitalise(key.slice(0, -1))} updated.` });
-    }
-
-    if (method === "DELETE") {
-      const id = Number(options.id);
-      store.remove(key, id);
-      store.log(`Deleted ${key.slice(0, -1)} #${id}`);
-      return Promise.resolve({ message: `${capitalise(key.slice(0, -1))} deleted.` });
-    }
-
-    return Promise.reject(new Error("Unsupported method."));
-  }
-
-  function capitalise(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
 
   /* ═══════════════════════════════════════════════════════
      AUTH
@@ -375,26 +316,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const username = fd.get("username").trim();
     const password = fd.get("password");
 
-    // Try demo first if offline
-    const tryDemo = () => {
-      isDemoMode = true;
-      return demoRequest("session", { method: "POST", body: { username, password } });
-    };
-
     try {
-      let result;
-      try {
-        result = await request("session", { method: "POST", body: { username, password } });
-      } catch (err) {
-        if (isDemoMode) throw err;
-        result = await tryDemo();
-      }
+      const result = await request("session", { method: "POST", body: { username, password } });
       loginForm.reset();
-      store.log(`Admin signed in (${isDemoMode ? "demo" : "live"} mode)`);
+      store.log("Admin signed in");
       setStatus(loginStatus, "");
       showDashboard(result.csrfToken);
       toast(`Welcome back, ${username}!`, "success");
-      if (isDemoMode) toast("Running in demo mode — changes are stored locally.", "info", 5000);
     } catch (err) {
       setStatus(loginStatus, err.message, true);
     } finally {
@@ -417,7 +345,6 @@ document.addEventListener("DOMContentLoaded", () => {
     store.log("Signed out from all sessions");
     toast("Signed out from all sessions.", "info");
     setTimeout(() => {
-      isDemoMode = false;
       showLogin("Signed out of all sessions.");
     }, 1200);
   });
@@ -877,63 +804,6 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ═══════════════════════════════════════════════════════
      PASSWORD CHANGE
   ═══════════════════════════════════════════════════════ */
-  const newPwInput = $("newPw");
-  const pwStrength = $("pwStrength");
-  const pwFill     = $("pwStrengthFill");
-  const pwLabel    = $("pwStrengthLabel");
-
-  newPwInput.addEventListener("input", () => {
-    const v = newPwInput.value;
-    if (!v) { pwStrength.hidden = true; return; }
-    pwStrength.hidden = false;
-    const score = calcPwStrength(v);
-    const levels = ["Weak", "Fair", "Good", "Strong", "Very strong"];
-    const classes = ["pw-weak", "pw-fair", "pw-good", "pw-strong", "pw-very-strong"];
-    pwFill.style.width   = `${(score + 1) * 20}%`;
-    pwFill.className     = classes[score];
-    pwLabel.textContent  = levels[score];
-  });
-
-  function calcPwStrength(pw) {
-    let s = 0;
-    if (pw.length >= 8)  s++;
-    if (pw.length >= 12) s++;
-    if (/[A-Z]/.test(pw)) s++;
-    if (/[0-9]/.test(pw)) s++;
-    if (/[^A-Za-z0-9]/.test(pw)) s++;
-    return Math.min(s - 1, 4);
-  }
-
-  $("passwordForm").addEventListener("submit", (e) => {
-    e.preventDefault();
-    const current  = $("currentPw").value;
-    const newPw    = $("newPw").value;
-    const confirmPw = $("confirmPw").value;
-    const pwStatus  = $("pwStatus");
-
-    if (current !== DEMO_PASS && !isDemoMode) {
-      setStatus(pwStatus, "Current password is incorrect.", true);
-      return;
-    }
-    if (isDemoMode && current !== DEMO_PASS) {
-      setStatus(pwStatus, "Current password is incorrect. (demo: admin123)", true);
-      return;
-    }
-    if (newPw.length < 8) {
-      setStatus(pwStatus, "New password must be at least 8 characters.", true);
-      return;
-    }
-    if (newPw !== confirmPw) {
-      setStatus(pwStatus, "Passwords do not match.", true);
-      return;
-    }
-    store.log("Password changed");
-    setStatus(pwStatus, "Password updated successfully.", false);
-    toast("Password updated.", "success");
-    $("passwordForm").reset();
-    pwStrength.hidden = true;
-  });
-
   /* ═══════════════════════════════════════════════════════
      EXPORT DATA
   ═══════════════════════════════════════════════════════ */
@@ -989,13 +859,11 @@ document.addEventListener("DOMContentLoaded", () => {
       if (result.authenticated) {
         showDashboard(result.csrfToken);
       } else {
-        isDemoMode = true;
         showLogin();
       }
     })
-    .catch(() => {
-      isDemoMode = true;
-      showLogin();
+    .catch((error) => {
+      showLogin(error.message);
     })
     .finally(() => {
       // Wire up filter searches after a tick to let the DOM settle
