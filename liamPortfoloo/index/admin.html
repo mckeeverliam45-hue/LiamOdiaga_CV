@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Admin Dashboard · Liam Mckeever</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/liam-mark.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="admin.css" />
+  </head>
+  <body class="admin-body">
+
+    <!-- ══════════════════════════════════════════════
+         LOGIN PANEL
+    ══════════════════════════════════════════════ -->
+    <main class="admin-auth" id="loginPanel">
+      <div class="auth-bg-shape" aria-hidden="true"></div>
+
+      <div class="auth-wrapper">
+        <a class="auth-brand" href="index.html" aria-label="Back to portfolio">
+          <span class="auth-brand-mark">
+            <img src="../assets/liam-mark.svg" alt="" width="28" height="28" />
+          </span>
+          <span class="auth-brand-text">
+            <strong>Liam Mckeever</strong>
+            <small>Portfolio CMS</small>
+          </span>
+        </a>
+
+        <section class="auth-card" aria-labelledby="loginTitle">
+          <header class="auth-card-header">
+            <span class="auth-badge">
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M6 1a3 3 0 0 1 3 3v1H3V4a3 3 0 0 1 3-3zm4 4H2a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1z"/></svg>
+              Secure access
+            </span>
+            <h1 id="loginTitle">Welcome back</h1>
+            <p class="auth-card-desc">Sign in to manage your portfolio content and messages.</p>
+          </header>
+
+          <!-- Demo credentials hint -->
+          <div class="demo-credentials">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <div>
+              <strong>Demo credentials</strong>
+              <span>Username: <code>admin</code> &nbsp;·&nbsp; Password: <code>admin123</code></span>
+            </div>
+          </div>
+
+          <form id="loginForm" class="auth-form" novalidate>
+            <div class="field-group">
+              <label class="field-label" for="username">Username</label>
+              <div class="field-wrap">
+                <svg class="field-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <input id="username" class="field-input" name="username" type="text" autocomplete="username" maxlength="50" placeholder="admin" required />
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label" for="password">Password</label>
+              <div class="field-wrap">
+                <svg class="field-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <input id="password" class="field-input" name="password" type="password" autocomplete="current-password" placeholder="••••••••" required />
+                <button class="pw-toggle" type="button" aria-label="Show password" id="pwToggle">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <label class="remember-row">
+              <input type="checkbox" id="rememberMe" />
+              <span>Remember me for 30 days</span>
+            </label>
+
+            <button class="btn-primary btn-full" type="submit" id="loginSubmit">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+              Sign in
+            </button>
+
+            <p class="admin-notice" id="loginStatus" role="status" aria-live="polite"></p>
+          </form>
+
+          <footer class="auth-card-footer">
+            <p class="auth-setup-note">Need an account? <a href="../backend/README.md" target="_blank" rel="noopener noreferrer">Setup guide →</a></p>
+            <a class="auth-back-link" href="index.html">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+              Back to portfolio
+            </a>
+          </footer>
+        </section>
+      </div>
+    </main>
+
+    <!-- ══════════════════════════════════════════════
+         DASHBOARD SHELL
+    ══════════════════════════════════════════════ -->
+    <div class="admin-shell" id="dashboard" hidden>
+
+      <!-- ── SIDEBAR ─────────────────────────────── -->
+      <aside class="admin-sidebar" id="adminSidebar" role="complementary" aria-label="Admin navigation">
+
+        <div class="sidebar-top">
+          <a class="sidebar-brand" href="index.html">
+            <span class="sidebar-brand-mark">
+              <img src="../assets/liam-mark.svg" alt="" width="26" height="26" />
+            </span>
+            <span class="sidebar-brand-text">
+              <strong>Liam Mckeever</strong>
+              <small>Admin Portal</small>
+            </span>
+          </a>
+
+          <!-- Mobile close -->
+          <button class="sidebar-close" id="sidebarClose" type="button" aria-label="Close sidebar">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+
+        <!-- Admin avatar / greeting -->
+        <div class="sidebar-user">
+          <div class="sidebar-avatar" id="sidebarAvatar">A</div>
+          <div>
+            <div class="sidebar-username" id="sidebarUsername">Admin</div>
+            <div class="sidebar-role">Administrator</div>
+          </div>
+          <div class="sidebar-status-dot" title="Online"></div>
+        </div>
+
+        <div class="sidebar-divider"></div>
+
+        <nav class="admin-nav" aria-label="Admin sections">
+          <p class="nav-section-label">Main</p>
+          <a class="nav-link active" href="#overview" data-section="overview">
+            <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            Overview
+          </a>
+          <a class="nav-link" href="#messages" data-section="messages">
+            <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Messages
+            <span class="nav-badge" id="msgBadge" hidden>0</span>
+          </a>
+          <a class="nav-link" href="#projects" data-section="projects">
+            <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+            Projects
+          </a>
+          <a class="nav-link" href="#education" data-section="education">
+            <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            Education
+          </a>
+          <a class="nav-link" href="#skills" data-section="skills">
+            <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            Skills
+          </a>
+
+          <p class="nav-section-label" style="margin-top:12px">Management</p>
+          <a class="nav-link" href="#activity" data-section="activity">
+            <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            Activity Log
+          </a>
+          <a class="nav-link" href="#quick-actions" data-section="quick-actions">
+            <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            Quick Actions
+          </a>
+          <a class="nav-link" href="#settings" data-section="settings">
+            <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            Settings
+          </a>
+        </nav>
+
+        <div class="sidebar-footer">
+          <a class="sidebar-site-link" href="index.html" target="_blank" rel="noopener">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            View public site
+          </a>
+        </div>
+      </aside>
+
+      <!-- Sidebar overlay (mobile) -->
+      <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+      <!-- ── MAIN ────────────────────────────────── -->
+      <main class="admin-main">
+
+        <!-- TOP BAR -->
+        <header class="admin-topbar" id="overview">
+          <div class="topbar-left">
+            <!-- Mobile hamburger -->
+            <button class="hamburger" id="hamburger" type="button" aria-label="Open menu">
+              <span></span><span></span><span></span>
+            </button>
+            <div class="topbar-title">
+              <span class="topbar-eyebrow">Portfolio management</span>
+              <h1 class="topbar-heading">Dashboard</h1>
+            </div>
+          </div>
+
+          <div class="topbar-right">
+            <!-- Global search -->
+            <div class="topbar-search">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input id="globalSearch" type="search" placeholder="Search content… (⌘K)" aria-label="Search portfolio content" />
+            </div>
+
+            <!-- Dark mode toggle -->
+            <button class="topbar-icon-btn" id="darkModeToggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">
+              <svg class="icon-light" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+              <svg class="icon-dark" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+
+            <!-- Notifications -->
+            <button class="topbar-icon-btn notif-btn" id="notifBtn" type="button" aria-label="Notifications" aria-haspopup="true" aria-expanded="false">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+              <span class="notif-dot" id="notifDot" hidden></span>
+            </button>
+
+            <!-- Notifications dropdown -->
+            <div class="notif-dropdown" id="notifDropdown" role="dialog" aria-label="Notifications" hidden>
+              <div class="notif-header">
+                <strong>Notifications</strong>
+                <button class="btn-text" id="clearNotifs" type="button">Clear all</button>
+              </div>
+              <ul class="notif-list" id="notifList">
+                <li class="notif-empty">No new notifications</li>
+              </ul>
+            </div>
+
+            <div class="topbar-divider"></div>
+
+            <button class="btn-ghost btn-sm" id="refreshButton" type="button">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4"/></svg>
+              Refresh
+            </button>
+            <button class="btn-danger-outline btn-sm" id="logoutButton" type="button">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              Sign out
+            </button>
+          </div>
+        </header>
+
+        <!-- Search results overlay -->
+        <div class="search-results" id="searchResults" hidden></div>
+
+        <p class="admin-notice" id="dashboardStatus" role="status" aria-live="polite"></p>
+
+        <!-- ── STATS ──────────────────────────────── -->
+        <section class="stats-grid" aria-label="Portfolio summary">
+          <article class="stat-card" data-href="#messages">
+            <div class="stat-icon stat-icon--blue">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div class="stat-body">
+              <p class="stat-label">Messages</p>
+              <h2 class="stat-value" id="messageCount">—</h2>
+            </div>
+            <svg class="stat-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </article>
+          <article class="stat-card" data-href="#projects">
+            <div class="stat-icon stat-icon--teal">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+            </div>
+            <div class="stat-body">
+              <p class="stat-label">Projects</p>
+              <h2 class="stat-value" id="projectCount">—</h2>
+            </div>
+            <svg class="stat-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </article>
+          <article class="stat-card" data-href="#education">
+            <div class="stat-icon stat-icon--purple">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            </div>
+            <div class="stat-body">
+              <p class="stat-label">Education</p>
+              <h2 class="stat-value" id="educationCount">—</h2>
+            </div>
+            <svg class="stat-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </article>
+          <article class="stat-card" data-href="#skills">
+            <div class="stat-icon stat-icon--amber">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+            <div class="stat-body">
+              <p class="stat-label">Skills</p>
+              <h2 class="stat-value" id="skillCount">—</h2>
+            </div>
+            <svg class="stat-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </article>
+        </section>
+
+        <!-- ── QUICK ACTIONS ──────────────────────── -->
+        <section class="panel" id="quick-actions">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <span class="panel-eyebrow">Shortcuts</span>
+              <h2 class="panel-title">Quick Actions</h2>
+            </div>
+          </div>
+          <div class="quick-actions-grid">
+            <button class="qa-card" data-reset-form="projectForm" data-scroll="projects" type="button">
+              <span class="qa-icon qa-icon--teal">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+              </span>
+              <strong>New Project</strong>
+              <span>Add a portfolio project</span>
+            </button>
+            <button class="qa-card" data-reset-form="educationForm" data-scroll="education" type="button">
+              <span class="qa-icon qa-icon--purple">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+              </span>
+              <strong>Add Education</strong>
+              <span>Add a qualification</span>
+            </button>
+            <button class="qa-card" data-reset-form="skillForm" data-scroll="skills" type="button">
+              <span class="qa-icon qa-icon--amber">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              </span>
+              <strong>Add Skill</strong>
+              <span>Add a skill or focus area</span>
+            </button>
+            <button class="qa-card" data-scroll="messages" type="button">
+              <span class="qa-icon qa-icon--blue">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </span>
+              <strong>View Messages</strong>
+              <span>Check contact inbox</span>
+            </button>
+            <button class="qa-card" id="qaExportBtn" type="button">
+              <span class="qa-icon qa-icon--green">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              </span>
+              <strong>Export Data</strong>
+              <span>Download portfolio JSON</span>
+            </button>
+            <button class="qa-card" id="qaRefreshBtn" type="button">
+              <span class="qa-icon qa-icon--slate">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4"/></svg>
+              </span>
+              <strong>Refresh Data</strong>
+              <span>Reload all portfolio data</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- ── MESSAGES ───────────────────────────── -->
+        <section class="panel" id="messages">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <span class="panel-eyebrow">Inbox</span>
+              <h2 class="panel-title">Contact Messages</h2>
+            </div>
+            <div class="panel-actions">
+              <input class="panel-search" id="msgSearch" type="search" placeholder="Filter messages…" aria-label="Filter messages" />
+              <button class="btn-ghost btn-sm" id="refreshButton" type="button">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4"/></svg>
+                Refresh
+              </button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Received</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Subject &amp; Message</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="messagesTable">
+                <tr><td colspan="6" class="table-empty">Loading messages…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ── PROJECTS + EDUCATION ───────────────── -->
+        <div class="management-grid">
+
+          <!-- PROJECTS -->
+          <section class="panel" id="projects">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-eyebrow">Public portfolio</span>
+                <h2 class="panel-title">Projects</h2>
+              </div>
+              <div class="panel-actions">
+                <input class="panel-search" id="projectSearch" type="search" placeholder="Filter…" aria-label="Filter projects" />
+                <button class="btn-ghost btn-sm" data-reset-form="projectForm" type="button">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  New
+                </button>
+              </div>
+            </div>
+
+            <form class="record-form" id="projectForm">
+              <input type="hidden" name="id" />
+              <div class="form-row">
+                <label class="field-label">Project title
+                  <input class="field-input" name="title" maxlength="150" placeholder="e.g. Portfolio Website" required />
+                </label>
+              </div>
+              <div class="form-row">
+                <label class="field-label">Description
+                  <textarea class="field-textarea" name="description" rows="3" placeholder="Brief description…" required></textarea>
+                </label>
+              </div>
+              <div class="form-row form-row--2col">
+                <label class="field-label">Project URL <span class="optional-tag">optional</span>
+                  <input class="field-input" name="project_url" type="url" maxlength="255" placeholder="https://" />
+                </label>
+                <label class="field-label">Image path <span class="optional-tag">optional</span>
+                  <input class="field-input" name="image" maxlength="255" placeholder="../images/project.jpg" />
+                </label>
+              </div>
+              <div class="form-actions">
+                <button class="btn-primary btn-sm" type="submit">Save project</button>
+                <button class="btn-ghost btn-sm" data-reset-form="projectForm" type="button">Cancel</button>
+              </div>
+            </form>
+
+            <div class="record-list" id="projectsList" aria-live="polite"></div>
+          </section>
+
+          <!-- EDUCATION -->
+          <section class="panel" id="education">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="panel-eyebrow">Public portfolio</span>
+                <h2 class="panel-title">Education</h2>
+              </div>
+              <div class="panel-actions">
+                <input class="panel-search" id="eduSearch" type="search" placeholder="Filter…" aria-label="Filter education" />
+                <button class="btn-ghost btn-sm" data-reset-form="educationForm" type="button">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  Add
+                </button>
+              </div>
+            </div>
+
+            <form class="record-form" id="educationForm">
+              <input type="hidden" name="id" />
+              <div class="form-row">
+                <label class="field-label">Institution
+                  <input class="field-input" name="institution" maxlength="150" placeholder="e.g. University of Nairobi" required />
+                </label>
+              </div>
+              <div class="form-row">
+                <label class="field-label">Qualification
+                  <input class="field-input" name="qualification" maxlength="150" placeholder="e.g. BSc Computer Science" required />
+                </label>
+              </div>
+              <div class="form-row form-row--2col">
+                <label class="field-label">Start year
+                  <input class="field-input" name="start_year" type="number" min="1901" max="2155" placeholder="2018" />
+                </label>
+                <label class="field-label">End year
+                  <input class="field-input" name="end_year" type="number" min="1901" max="2155" placeholder="2022" />
+                </label>
+              </div>
+              <div class="form-row">
+                <label class="field-label">Description <span class="optional-tag">optional</span>
+                  <textarea class="field-textarea" name="description" rows="3" placeholder="Notes about this qualification…"></textarea>
+                </label>
+              </div>
+              <div class="form-actions">
+                <button class="btn-primary btn-sm" type="submit">Save record</button>
+                <button class="btn-ghost btn-sm" data-reset-form="educationForm" type="button">Cancel</button>
+              </div>
+            </form>
+
+            <div class="record-list" id="educationList" aria-live="polite"></div>
+          </section>
+
+        </div><!-- /management-grid -->
+
+        <!-- ── SKILLS ─────────────────────────────── -->
+        <section class="panel" id="skills">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <span class="panel-eyebrow">Public portfolio</span>
+              <h2 class="panel-title">Skills &amp; Focus Areas</h2>
+            </div>
+            <div class="panel-actions">
+              <input class="panel-search" id="skillSearch" type="search" placeholder="Filter…" aria-label="Filter skills" />
+              <button class="btn-ghost btn-sm" data-reset-form="skillForm" type="button">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Add skill
+              </button>
+            </div>
+          </div>
+
+          <form class="record-form record-form--inline" id="skillForm">
+            <input type="hidden" name="id" />
+            <div class="form-row form-row--3col">
+              <label class="field-label">Skill name
+                <input class="field-input" name="name" maxlength="150" placeholder="e.g. PHP Development" required />
+              </label>
+              <label class="field-label">Category
+                <input class="field-input" name="category" maxlength="100" placeholder="Development, IT Support…" required />
+              </label>
+              <label class="field-label">Description
+                <input class="field-input" name="description" maxlength="5000" placeholder="Short description…" required />
+              </label>
+            </div>
+            <div class="form-actions">
+              <button class="btn-primary btn-sm" type="submit">Save skill</button>
+              <button class="btn-ghost btn-sm" data-reset-form="skillForm" type="button">Cancel</button>
+            </div>
+          </form>
+
+          <div class="record-list record-list--skills" id="skillsList" aria-live="polite"></div>
+        </section>
+
+        <!-- ── ACTIVITY LOG ───────────────────────── -->
+        <section class="panel" id="activity">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <span class="panel-eyebrow">Audit trail</span>
+              <h2 class="panel-title">Activity Log</h2>
+            </div>
+            <button class="btn-ghost btn-sm" id="clearActivityBtn" type="button">Clear log</button>
+          </div>
+          <ul class="activity-log" id="activityLog">
+            <li class="activity-empty">No activity recorded yet.</li>
+          </ul>
+        </section>
+
+        <!-- ── SETTINGS ───────────────────────────── -->
+        <section class="panel" id="settings">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <span class="panel-eyebrow">Account &amp; preferences</span>
+              <h2 class="panel-title">Settings</h2>
+            </div>
+          </div>
+
+          <div class="settings-grid">
+
+            <!-- Profile info -->
+            <div class="settings-card">
+              <h3 class="settings-card-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                Profile
+              </h3>
+              <div class="profile-row">
+                <div class="profile-avatar" id="profileAvatar">A</div>
+                <div>
+                  <div class="profile-name" id="profileName">Admin</div>
+                  <div class="profile-email">admin@liamportfolio.dev</div>
+                  <div class="profile-role-badge">Administrator</div>
+                </div>
+              </div>
+              <div class="settings-info-list">
+                <div class="settings-info-row">
+                  <span>Last login</span>
+                  <strong id="lastLogin">Just now</strong>
+                </div>
+                <div class="settings-info-row">
+                  <span>Session started</span>
+                  <strong id="sessionStart">—</strong>
+                </div>
+                <div class="settings-info-row">
+                  <span>Session expires</span>
+                  <strong id="sessionExpiry">30 min</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Change password -->
+            <div class="settings-card">
+              <h3 class="settings-card-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                Change Password
+              </h3>
+              <form class="record-form" id="passwordForm" style="margin-bottom:0">
+                <div class="form-row">
+                  <label class="field-label">Current password
+                    <input class="field-input" id="currentPw" type="password" placeholder="Enter current password" required />
+                  </label>
+                </div>
+                <div class="form-row">
+                  <label class="field-label">New password
+                    <input class="field-input" id="newPw" type="password" placeholder="Min. 8 characters" required minlength="8" />
+                  </label>
+                </div>
+                <div class="form-row">
+                  <label class="field-label">Confirm new password
+                    <input class="field-input" id="confirmPw" type="password" placeholder="Repeat new password" required />
+                  </label>
+                </div>
+                <div class="pw-strength" id="pwStrength" hidden>
+                  <div class="pw-strength-bar">
+                    <span id="pwStrengthFill"></span>
+                  </div>
+                  <span id="pwStrengthLabel">—</span>
+                </div>
+                <div class="form-actions">
+                  <button class="btn-primary btn-sm" type="submit">Update password</button>
+                </div>
+                <p class="admin-notice" id="pwStatus" role="status" aria-live="polite"></p>
+              </form>
+            </div>
+
+            <!-- Appearance -->
+            <div class="settings-card">
+              <h3 class="settings-card-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                Appearance
+              </h3>
+              <div class="toggle-row">
+                <div>
+                  <strong>Dark mode</strong>
+                  <small>Use dark colour scheme</small>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="darkModeToggle2" />
+                  <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                </label>
+              </div>
+              <div class="toggle-row">
+                <div>
+                  <strong>Compact sidebar</strong>
+                  <small>Collapse sidebar on load</small>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="compactSidebar" />
+                  <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                </label>
+              </div>
+              <div class="toggle-row">
+                <div>
+                  <strong>Notifications</strong>
+                  <small>Show in-app notifications</small>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="notifToggle" checked />
+                  <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Keyboard shortcuts -->
+            <div class="settings-card">
+              <h3 class="settings-card-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8"/></svg>
+                Keyboard Shortcuts
+              </h3>
+              <ul class="shortcut-list">
+                <li><kbd>⌘K</kbd> <span>Focus global search</span></li>
+                <li><kbd>⌘R</kbd> <span>Refresh dashboard</span></li>
+                <li><kbd>⌘D</kbd> <span>Toggle dark mode</span></li>
+                <li><kbd>⌘1</kbd> <span>Go to Overview</span></li>
+                <li><kbd>⌘2</kbd> <span>Go to Messages</span></li>
+                <li><kbd>⌘3</kbd> <span>Go to Projects</span></li>
+                <li><kbd>Esc</kbd> <span>Close search / modals</span></li>
+              </ul>
+            </div>
+
+            <!-- Danger zone -->
+            <div class="settings-card settings-card--danger">
+              <h3 class="settings-card-title settings-card-title--danger">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                Danger Zone
+              </h3>
+              <p class="settings-card-desc">These actions are irreversible. Use with caution.</p>
+              <div class="form-actions">
+                <button class="btn-danger btn-sm" id="clearActivityDanger" type="button">Clear activity log</button>
+                <button class="btn-danger btn-sm" id="signOutAllBtn" type="button">Sign out everywhere</button>
+              </div>
+            </div>
+
+          </div><!-- /settings-grid -->
+        </section>
+
+        <footer class="admin-footer">
+          <a href="index.html">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Back to public portfolio
+          </a>
+          <span class="admin-footer-copy">&copy; Liam Mckeever Admin Portal &nbsp;·&nbsp; <span id="footerTime"></span></span>
+        </footer>
+
+      </main>
+    </div><!-- /admin-shell -->
+
+    <!-- ── TOAST CONTAINER ─────────────────────── -->
+    <div class="toast-container" id="toastContainer" aria-live="assertive" aria-atomic="true"></div>
+
+    <script src="../js/admin.js"></script>
+  </body>
+</html>
