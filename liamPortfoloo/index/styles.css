@@ -1348,16 +1348,6 @@ textarea {
   margin: 0;
 }
 
-.admin-access-link {
-  color: var(--muted);
-  font-size: 0.8rem;
-  font-weight: 700;
-}
-
-.admin-access-link:hover {
-  color: var(--accent-dark);
-}
-
 .back-to-top {
   position: fixed;
   z-index: 19;

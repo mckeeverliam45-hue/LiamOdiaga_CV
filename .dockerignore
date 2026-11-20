@@ -2,6 +2,10 @@
 .github
 liamPortfoloo/Documentation
 liamPortfoloo/css
+liamPortfoloo/index/admin.html
+liamPortfoloo/index/admin.css
+liamPortfoloo/js/admin.js
+liamPortfoloo/backend/README.md
 liamPortfoloo/desktop.ini
 *.ini
 Thumbs.db
