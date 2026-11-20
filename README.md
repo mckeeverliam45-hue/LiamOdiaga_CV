@@ -1,10 +1,10 @@
 # Liam Odiaga CV
 
 The Render service is built with Docker from the repository root. The app
-currently lives in `liamPortfoloo/`; `Dockerfile` copies only the public site
-files and PHP endpoints to Apache's document root. The admin dashboard page,
-styles, script, setup guide, SQL schema, and account creation script are not
-included in the public image. Use the local Laragon site for admin access.
+currently lives in `liamPortfoloo/`. The public homepage does not link to the
+admin sign-in. The dashboard is available at `/admin.html`, requires an admin
+login, and is marked `noindex`; portfolio edits are stored in the shared
+PostgreSQL database so visitors see the updated content.
 
 ## Render deployment
 
@@ -13,9 +13,11 @@ This creates the `liamodiaga-cv` Docker web service. If a Static Site already
 exists for this repository, replace it with a Docker web service because static
 hosting cannot execute the PHP backend.
 
-The public pages can load without database credentials, but contact submission
-and dynamic portfolio content require a reachable MySQL database. Set `DB_HOST`,
-`DB_NAME`, `DB_USER`, `DB_PASS`, and optionally `DB_PORT` in Render's environment
-settings, then import `liamPortfoloo/database/digital_cv.sql` into that database.
-Manage portfolio edits through the local Laragon admin dashboard. Never commit
-database credentials.
+Create a PostgreSQL database in Render in the same region as the web service,
+then set its Internal Database URL as `DATABASE_URL` in the service's
+environment. Set `ADMIN_PASSWORD` there to a strong password of at least 12
+characters; `ADMIN_USERNAME` defaults to `Mckeever`. On startup, the service
+creates the schema and starter content and creates or resets the admin account.
+Keep database URLs and passwords in Render's environment settings, never in Git
+or chat. Review the selected database plan, cost, and retention before creating
+it. See `liamPortfoloo/backend/README.md` for local MySQL setup instructions.

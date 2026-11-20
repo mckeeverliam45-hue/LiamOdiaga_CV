@@ -9,13 +9,9 @@ services:
     healthCheckPath: /
     renderSubdomainPolicy: enabled
     envVars:
-      - key: DB_HOST
+      - key: DATABASE_URL
         sync: false
-      - key: DB_NAME
+      - key: ADMIN_USERNAME
+        value: Mckeever
+      - key: ADMIN_PASSWORD
         sync: false
-      - key: DB_USER
-        sync: false
-      - key: DB_PASS
-        sync: false
-      - key: DB_PORT
-        value: "3306"

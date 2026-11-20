@@ -1,8 +1,8 @@
 # Admin setup
 
-The admin dashboard requires PHP with PDO MySQL enabled and the `digital_cv` MySQL database.
-Serve the repository root through Apache/PHP (for example, with XAMPP) and open
-`/admin.html`; opening the HTML files with a `file://` URL will not connect to PHP.
+The local admin dashboard uses PHP with PDO MySQL and the `digital_cv` database.
+Serve the repository root through Apache/PHP (for example, with Laragon) and open
+`/index/admin.html`; opening the HTML files with a `file://` URL will not connect to PHP.
 
 1. Import `database/digital_cv.sql` into MySQL. The script creates the required
    tables, including the editable skills catalog, and adds starter portfolio
@@ -28,8 +28,26 @@ Serve the repository root through Apache/PHP (for example, with XAMPP) and open
 
    Running the script again resets the `Mckeever` account's password. To use a
    different username, set `ADMIN_USERNAME` before running the script.
-4. Visit `/admin.html` and sign in. The dashboard can review/delete contact
+4. Visit `/index/admin.html` and sign in. The dashboard can review/delete contact
    messages and create, edit, or delete projects, education records, and skills.
    Portfolio content changes appear on the public site.
 
-Use HTTPS when the site is deployed publicly so the admin session cookie is secure.
+## Online admin on Render
+
+The public homepage does not link to the admin page. After the Render database
+and environment are configured, open the live site URL followed by `/admin.html`
+and sign in with username `Mckeever` and the password stored in Render's
+`ADMIN_PASSWORD` environment variable.
+
+1. Create a PostgreSQL database in the same Render region as the web service.
+   Review its plan, price, and retention before creating it.
+2. Set `DATABASE_URL` in the web service to the database's Internal Database URL.
+3. Set `ADMIN_PASSWORD` to a strong password of at least 12 characters. Keep it
+   in Render's environment settings; do not send it in chat or commit it.
+4. Deploy or restart the web service. Startup creates the schema, starter
+   portfolio records, and the `Mckeever` admin account. If the password is
+   changed in Render, the next restart updates the admin password.
+
+The `DATABASE_URL` connection path enables PostgreSQL on Render; local MySQL
+continues to use `DB_HOST`, `DB_NAME`, `DB_USER`, and `DB_PASS`. Use HTTPS for
+online sign-in so the admin session cookie is secure.
