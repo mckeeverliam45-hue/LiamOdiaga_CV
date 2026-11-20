@@ -2,9 +2,10 @@
 
 The Render service is built with Docker from the repository root. The app
 currently lives in `liamPortfoloo/`. The public homepage does not link to the
-admin sign-in. The dashboard is available at `/admin.html`, requires an admin
-login, and is marked `noindex`; portfolio edits are stored in the shared
-PostgreSQL database so visitors see the updated content.
+dashboard; a small footer lock icon opens the sign-in page. The dashboard is
+available at `/admin.html`, requires an admin login, and is marked `noindex`;
+portfolio edits are stored in the shared PostgreSQL database so visitors see
+the updated content.
 
 ## Render deployment
 

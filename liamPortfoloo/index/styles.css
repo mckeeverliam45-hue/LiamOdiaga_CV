@@ -1348,6 +1348,31 @@ textarea {
   margin: 0;
 }
 
+.footer-admin-link {
+  display: inline-grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--muted);
+  transition: color 180ms ease, background-color 180ms ease;
+}
+
+.footer-admin-link:hover {
+  background: var(--accent-soft);
+  color: var(--accent-dark);
+}
+
+.footer-admin-link:focus-visible {
+  outline: 3px solid #e7a85b;
+  outline-offset: 3px;
+}
+
+.footer-admin-link svg {
+  width: 16px;
+  height: 16px;
+}
+
 .back-to-top {
   position: fixed;
   z-index: 19;
@@ -2603,6 +2628,9 @@ th {
 }
 [data-theme="dark"] .footer-brand {
   color: var(--text);
+}
+[data-theme="dark"] .footer-admin-link:hover {
+  color: var(--accent);
 }
 
 /* ── Back-to-top ─────────────────────────────────────────── */

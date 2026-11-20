@@ -34,10 +34,10 @@ Serve the repository root through Apache/PHP (for example, with Laragon) and ope
 
 ## Online admin on Render
 
-The public homepage does not link to the admin page. After the Render database
-and environment are configured, open the live site URL followed by `/admin.html`
-and sign in with username `Mckeever` and the password stored in Render's
-`ADMIN_PASSWORD` environment variable.
+The footer lock icon opens the admin sign-in page. After the Render database
+and environment are configured, you can also open the live site URL followed
+by `/admin.html` and sign in with username `Mckeever` and the password stored
+in Render's `ADMIN_PASSWORD` environment variable.
 
 1. Create a PostgreSQL database in the same Render region as the web service.
    Review its plan, price, and retention before creating it.
